@@ -18,7 +18,6 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("has started " + this.hasStarted);
 		if(!this.hasStarted){
 			this.transform.position = paddle.transform.position + paddleToBallVector;
 			
