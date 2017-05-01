@@ -14,10 +14,12 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void LoadLevel(string level){
+		Brick.breakableCount = 0;
 		Application.LoadLevel(level);
 	}
 
 	public void LoadNextLevel(){
+		Brick.breakableCount = 0;
 		Application.LoadLevel(Application.loadedLevel + 1);
 	}
 

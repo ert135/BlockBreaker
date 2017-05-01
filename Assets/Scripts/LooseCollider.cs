@@ -11,6 +11,7 @@ public class LooseCollider : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D BallCollision){
 		print ("Trigged Loose");
+		Brick.breakableCount = 0;
 		this.levelManager.LoadLevel("Win Screen");
 	}
 }

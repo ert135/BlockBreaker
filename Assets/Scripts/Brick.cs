@@ -10,12 +10,13 @@ public class Brick : MonoBehaviour {
 	private LevelManager levelManager;
 	private static int number;
 	private bool isBreakable;
+	public GameObject smoke;
 
 	// Use this for initialization
 	void Start () {
 		this.isBreakable = (this.tag == "Breakable");
 
-		if(isBreakable){
+		if(isBreakable == true){
 			breakableCount++;
 		}
 
@@ -41,6 +42,7 @@ public class Brick : MonoBehaviour {
 		if(this.timesHit == maxHits){
 			breakableCount--;
 			levelManager.BrickDestroyed();
+			Instantiate(smoke, this.transform.position, Quaternion.identity);
 			Destroy(gameObject);
 			number--;
 		}else{
