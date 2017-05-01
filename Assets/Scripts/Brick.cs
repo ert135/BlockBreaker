@@ -2,15 +2,23 @@
 using System.Collections;
 
 public class Brick : MonoBehaviour {
-	
-	public int maxHits;
+
+	public Sprite[] hitSprites;
+	public static int breakableCount = 0;
+
 	private int timesHit;
 	private LevelManager levelManager;
 	private static int number;
+	private bool isBreakable;
 
 	// Use this for initialization
 	void Start () {
-		number ++;
+		this.isBreakable = (this.tag == "Breakable");
+
+		if(isBreakable){
+			breakableCount++;
+		}
+
 		levelManager = GameObject.FindObjectOfType<LevelManager>();
 		this.timesHit = 0;
 	}
@@ -21,18 +29,27 @@ public class Brick : MonoBehaviour {
 	}
 
 	void OnCollisionExit2D(Collision2D coll) {
+		bool isBreakable = (this.tag == "Breakable");
+		if(isBreakable){
+			this.HandleHits();
+		}
+	}
+
+	void HandleHits(){
 		this.timesHit++;
-		if(this.timesHit == this.maxHits){
+		int maxHits = hitSprites.Length + 1;
+		if(this.timesHit == maxHits){
+			breakableCount--;
+			levelManager.BrickDestroyed();
 			Destroy(gameObject);
 			number--;
-		};
-		if(number == 0){
-			this.winLevel ();
+		}else{
+			LoadSprites();
 		};
 	}
 
-	public void winLevel(){
-		Debug.Log("Winning");
-		this.levelManager.LoadNextLevel();
+	private void LoadSprites() {
+		int spriteIndex = timesHit - 1;
+		this.GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
 	}
 }

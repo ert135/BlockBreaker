@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(!this.hasStarted){
 			this.transform.position = paddle.transform.position + paddleToBallVector;
 			
@@ -25,6 +26,14 @@ public class Ball : MonoBehaviour {
 				this.hasStarted = true;
 				this.rigidBody.velocity = new Vector2(2f, 10f);
 			}
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D collision) {
+		Vector2 tweak = new Vector2(Random.Range(0f, 0.2f), Random.Range(0f,0.2f));
+
+		if(this.hasStarted){
+			this.rigidBody.velocity += tweak;
 		}
 	}
 }
